@@ -1,0 +1,282 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/theme/white.css">
+    <link rel="stylesheet" href="lib/css/monokai.css">
+    <title>React Essentials</title>
+    <style>
+        .who-is-using-react-section img {
+            width: 220px;
+            padding: 20px;
+        }
+
+        mark {
+            color: inherit;
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+    </style>
+</head>
+<body>
+<div class="reveal">
+    <div class="slides">
+        <section>
+            <img src="img/react-logo.png" class="plain" alt="React logo"/>
+            <h1>React Essentials</h1>
+            <p>by Wojtek Kumoń and Łukasz Kostrzewa</p>
+        </section>
+        <section>
+            <h1>Agenda</h1>
+            <ol>
+                <li>Background</li>
+                <li>What's React?</li>
+                <li>Why React?</li>
+                <li>Key concepts</li>
+                <li style="white-space: nowrap;">Let's build an app</li>
+            </ol>
+        </section>
+        <section>
+            <h1>Background</h1>
+            <ul>
+                <li class="fragment">
+                    <p>Multiple-Page Application</p>
+                    <ul>
+                        <li>Server renders HTML</li>
+                        <li>JSP/JSF, ASP.NET, Django, etc.</li>
+                    </ul>
+                </li>
+                <li class="fragment">
+                    <p>Single-Page Application</p>
+                    <ul>
+                        <li>HTML5 History API (or location hash)</li>
+                        <li>Only data is being fetched from server</li>
+                        <li>Knockout, Backbone.js, Angular, React, Vue.js</li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+        <section>
+            <h1>What is React?</h1>
+            <p class="fragment">A JavaScript <em>library</em> for building user interfaces</p>
+        </section>
+        <section>
+            <section>
+                <h1>Why React?</h1>
+                <ul class="fragment">
+                    <li>Easy learning curve</li>
+                    <li>Performance</li>
+                    <li>Declarative, functional, unidirectional data flow, less side effects</li>
+                    <li>Testability</li>
+                    <li>Documentation, stability, tooling</li>
+                </ul>
+            </section>
+            <section class="who-is-using-react-section">
+                <h2>Who's using React</h2>
+                <img src="img/facebook-logo.png" class="plain" alt="Facebook logo"/>
+                <img src="img/instagram-logo.png" class="plain" alt="Instagram logo"/>
+                <img src="img/netflix-logo.png" class="plain" alt="Netflix logo"/>
+                <img src="img/airbnb-logo.png" class="plain" alt="Airbnb logo"/>
+                <img src="img/dropbox-logo.png" class="plain" alt="Dropbox logo"/>
+                <img src="img/the-new-york-times-logo.png" class="plain" alt="The New York Times logo"/>
+                <p class="fragment">and many others...</p>
+            </section>
+            <section
+                    data-background-iframe="https://npmcharts.com/compare/@angular/core,react,vue?minimal=true&interval=7">
+                <h2 class="fragment fade-out">Downloads from npm</h2>
+            </section>
+            <section data-background-image="img/github-stars-comparison.png" data-background-size="contain">
+                <h2 class="fragment fade-out">GitHub Stars comparison</h2>
+            </section>
+        </section>
+        <section>
+            <section>
+                <h1>Key concepts</h1>
+            </section>
+        </section>
+        <section>
+            <section>
+                <h2>Components and Props</h2>
+                <ul class="fragment">
+                    <li>Component is a self-contained, reusable building block of web application</li>
+                    <li>Props (stands for properties) - input data for components</li>
+                    <li>
+                        Idempotent, pure function (with respect to props):
+                        <pre><code class="javascript">f(props) = /* UI fragment */</code></pre>
+                    </li>
+                    <li>Props are <strong>read-only</strong></li>
+                </ul>
+            </section>
+            <section>
+                <small>The simplest way to create a component is to write a JavaScript function:</small>
+                <pre><code data-trim class="javascript">
+                    function Welcome(props) {
+                        return <h1>Hello, {props.name}</h1>;
+                    }
+                </code></pre>
+                <small class="fragment">
+                    Components can be defined using
+                    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes">ES6 class</a>
+                    syntax as well:
+                </small>
+                <pre class="fragment"><code data-trim class="javascript">
+                    class Welcome extends React.Component {
+                      render() {
+                        return <h1>Hello, {this.props.name}</h1>;
+                      }
+                    }
+                </code></pre>
+                <small class="fragment">The above two components are equivalent from React’s point of view.</small>
+            </section>
+        </section>
+        <section>
+            <section>
+                <h2>State and Lifecycle</h2>
+                <ul>
+                    <li class="fragment">UIs are dynamic and change over time</li>
+                    <li class="fragment">State allows React components to change their output over time in response to
+                        user actions, network responses, etc.
+                    </li>
+                    <li class="fragment">State is similar to props, but is private and fully controlled by the
+                        component
+                    </li>
+                    <li class="fragment">Used in classes (or in functions using <a
+                            href="https://reactjs.org/docs/hooks-intro.html">Hooks</a>)
+                    </li>
+                </ul>
+            </section>
+            <section>
+                <pre><code data-trim data-noescape class="javascript">
+                    class Clock extends React.Component {
+                      constructor(props) {
+                        super(props);
+                        <mark>this.state = {date: new Date()};</mark>
+                      }
+
+                      render() {
+                        return (
+                          &lt;div&gt;
+                            &lt;h1&gt;Hello, world!&lt;/h1&gt;
+                            <mark>&lt;h2&gt;It is {this.state.date.toLocaleTimeString()}.&lt;/h2&gt;</mark>
+                          &lt;/div&gt;
+                        );
+                      }
+                    }
+                </code></pre>
+            </section>
+            <section>
+                <h2>Three rules when using state</h2>
+            </section>
+            <section>
+                <h3>1. Do Not Modify State Directly</h3>
+                <pre class="fragment"><code data-trim class="javascript">
+                    // Wrong
+                    this.state.comment = 'Hello';
+                </code></pre>
+                <p class="fragment">Instead, use <code>setState()</code>:</p>
+                <pre class="fragment"><code data-trim class="javascript">
+                    // Correct
+                    this.setState({comment: 'Hello'});
+                </code></pre>
+                <p class="fragment"><code>this.state</code> can only be assigned in the constructor</p>
+            </section>
+            <section>
+                <h3>2. State Updates May Be Asynchronous</h3>
+                <small class="fragment">
+                    Because <code>this.props</code> and <code>this.state</code> may be updated asynchronously, we
+                    should not rely on their values for calculating the next state
+                </small>
+                <pre class="fragment"><code data-trim class="javascript">
+                    // Wrong
+                    this.setState({
+                      counter: this.state.counter + this.props.increment,
+                    });
+                </code></pre>
+                <small class="fragment">Instead, use second form of <code>setState()</code>:</small>
+                <pre class="fragment"><code data-trim class="javascript">
+                    // Correct
+                    this.setState((state, props) => ({
+                      counter: state.counter + props.increment
+                    }));
+                </code></pre>
+            </section>
+            <section>
+                <h3>3. State Updates are Merged</h3>
+                <p class="fragment">
+                    <code>setState()</code> merges provided object into the current state
+                </p>
+                <pre class="fragment"><code data-trim class="javascript">
+                    constructor(props) {
+                        super(props);
+                        this.state = {
+                          posts: [],
+                          comments: []
+                        };
+                    }
+                </code></pre>
+                <p class="fragment">
+                    <code>this.setState({comments})</code> leaves <code>this.state.posts</code> intact
+                </p>
+            </section>
+            <section>
+                <h2>Lifecycle methods</h2>
+                <pre class="fragment"><code data-trim data-noescape class="javascript">
+                    class Clock extends React.Component {
+                      // ...
+
+                      <mark>componentDidMount</mark>() {
+
+                      }
+
+                      <mark>componentWillUnmount</mark>() {
+
+                      }
+
+                      render() {
+                        // ...
+                      }
+                    }
+                </code></pre>
+            </section>
+        </section>
+        <section>
+            <section>
+                <h2>JSX</h2>
+                <p class="fragment">produces React “elements”</p>
+                <p class="fragment">React doesn’t require using JSX</p>
+                <p class="fragment">any valid JavaScript expression can be put inside the curly braces</p>
+                <p class="fragment">JSX Prevents Injection Attacks</p>
+            </section>
+            <section>
+                <p>Babel compiles JSX down to React.createElement() calls</p>
+                <pre class="fragment"><code data-trim class="javascript">
+                    const element = (
+                      <h1 className="greeting">
+                        Hello, world!
+                      </h1>
+                    );
+                </code></pre>
+                <p class="fragment">boils down to:</p>
+                <pre class="fragment"><code data-trim class="javascript">
+                    const element = React.createElement(
+                      'h1',
+                      {className: 'greeting'},
+                      'Hello, world!'
+                    );
+                </code></pre>
+            </section>
+        </section>
+        <section>
+            <h1>Let's build an app</h1>
+        </section>
+    </div>
+</div>
+<script src="js/reveal.js"></script>
+<script>
+    Reveal.initialize({
+        dependencies: [
+            {src: 'plugin/highlight/highlight.js', async: true},
+        ]
+    });
+</script>
+</body>
+</html>

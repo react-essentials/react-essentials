@@ -1,0 +1,25 @@
+{
+  "name": "react-essentials-app",
+  "private": true,
+  "version": "0.0.1",
+  "description": "React Essentials App",
+  "scripts": {
+    "build": "webpack --mode production",
+    "start": "webpack-dev-server"
+  },
+  "devDependencies": {
+    "awesome-typescript-loader": "^5.2.1",
+    "html-webpack-harddisk-plugin": "^1.0.1",
+    "html-webpack-plugin": "^3.2.0",
+    "typescript": "^3.3.3333",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.2.3",
+    "webpack-dev-server": "^3.2.1"
+  },
+  "dependencies": {
+    "@types/react": "^16.8.7",
+    "@types/react-dom": "^16.8.2",
+    "react": "^16.8.4",
+    "react-dom": "^16.8.4"
+  }
+}
