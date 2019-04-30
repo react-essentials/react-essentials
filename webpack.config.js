@@ -1,5 +1,6 @@
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const HtmlWebpackHarddiskPlugin = require('html-webpack-harddisk-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const path = require('path');
 
 const port = 3000;
@@ -29,10 +30,14 @@ module.exports = {
 
     module: {
         rules: [
-            {test: /\.tsx?$/, loader: 'awesome-typescript-loader'}
+            {test: /\.tsx?$/, loader: 'awesome-typescript-loader'},
+            {test: /\.css$/, use: [MiniCssExtractPlugin.loader, {loader: 'css-loader'}]}
         ]
     },
     plugins: [
+        new MiniCssExtractPlugin({
+            filename: 'styles.css'
+        }),
         new HtmlWebPackPlugin({
             alwaysWriteToDisk: true,
             template: './src/index-template.html',
