@@ -1,24 +1,26 @@
 import * as React from 'react';
 import Container from 'reactstrap/lib/Container';
+import {Booking} from '../types/Booking';
 import BookingBox from './BookingBox';
 
-export default class BookingsPage extends React.PureComponent {
+export default class BookingsPage extends React.PureComponent<BookingsPageProps> {
     render() {
+        const {bookings} = this.props;
         return (
             <Container className='pt-4'>
-                <BookingBox bookingNumber='123456'
-                            departureAirport='LAS'
-                            arrivalAirport='LAX'
-                            departureDateTime='2019-07-12T09:00'
-                            airlineCode='AA'
-                            price={95.25}/>
-                <BookingBox bookingNumber='654321'
-                            departureAirport='DUS'
-                            arrivalAirport='PMI'
-                            departureDateTime='2019-08-16T17:00'
-                            airlineCode='LH'
-                            price={160.99}/>
+                {bookings.map(booking =>
+                    <BookingBox key={booking.bookingNumber}
+                                bookingNumber={booking.bookingNumber}
+                                departureAirport={booking.departureAirport}
+                                arrivalAirport={booking.arrivalAirport}
+                                departureDateTime={booking.departureDateTime}
+                                airlineCode={booking.airlineCode}
+                                price={booking.price}/>)}
             </Container>
         )
     }
+}
+
+interface BookingsPageProps {
+    bookings: Booking[];
 }
