@@ -5,7 +5,7 @@ import BookingBox from './BookingBox';
 
 export default class BookingsPage extends React.PureComponent<BookingsPageProps> {
     render() {
-        const {bookings} = this.props;
+        const {bookings, removeBooking} = this.props;
         return (
             <Container className='pt-4'>
                 {bookings.map(booking =>
@@ -15,7 +15,8 @@ export default class BookingsPage extends React.PureComponent<BookingsPageProps>
                                 arrivalAirport={booking.arrivalAirport}
                                 departureDateTime={booking.departureDateTime}
                                 airlineCode={booking.airlineCode}
-                                price={booking.price}/>)}
+                                price={booking.price}
+                                removeBooking={() => removeBooking(booking)}/>)}
             </Container>
         )
     }
@@ -23,4 +24,5 @@ export default class BookingsPage extends React.PureComponent<BookingsPageProps>
 
 interface BookingsPageProps {
     bookings: Booking[];
+    removeBooking: (booking: Booking) => void;
 }

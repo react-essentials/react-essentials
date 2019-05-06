@@ -9,9 +9,13 @@ export default class BookingBox extends React.PureComponent<BookingBoxProps> {
     render() {
         const {
             bookingNumber, departureAirport, arrivalAirport,
-            departureDateTime, airlineCode, price
+            departureDateTime, airlineCode, price, removeBooking
         } = this.props;
         const formattedDate = new Date(departureDateTime).toLocaleString();
+        const removeBookingOnClick = (event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
+            event.preventDefault();
+            removeBooking();
+        };
 
         return (
             <BookingWrapper>
@@ -35,7 +39,7 @@ export default class BookingBox extends React.PureComponent<BookingBoxProps> {
                         <PriceWrapper>
                             <span className='text-right'>
                                 <Price>${price}</Price>
-                                <CloseBtn>×</CloseBtn>
+                                <CloseBtn onClick={removeBookingOnClick}>×</CloseBtn>
                             </span>
                         </PriceWrapper>
                     </Col>
@@ -52,6 +56,7 @@ interface BookingBoxProps {
     departureDateTime: string;
     airlineCode: string;
     price: number;
+    removeBooking: () => void;
 }
 
 const BookingWrapper = styled.a.attrs({
