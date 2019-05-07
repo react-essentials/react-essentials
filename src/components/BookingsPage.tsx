@@ -3,11 +3,15 @@ import Container from 'reactstrap/lib/Container';
 import {Booking} from '../types/Booking';
 import {SortType} from '../types/SortType';
 import BookingBox from './BookingBox';
+import NewBookingForm from './NewBookingForm';
 import SearchPanel from './SearchPanel';
 
 export default class BookingsPage extends React.PureComponent<BookingsPageProps> {
     render() {
-        const {bookings, removeBooking, currentSorting, setSorting, searchValue, setSearchValue} = this.props;
+        const {
+            bookings, removeBooking, addBooking,
+            currentSorting, setSorting, searchValue, setSearchValue
+        } = this.props;
         const filteredBookings = filterAndSort(bookings, searchValue, currentSorting);
         return (
             <Container className='pt-4'>
@@ -24,6 +28,7 @@ export default class BookingsPage extends React.PureComponent<BookingsPageProps>
                                 airlineCode={booking.airlineCode}
                                 price={booking.price}
                                 removeBooking={() => removeBooking(booking)}/>)}
+                <NewBookingForm addBooking={addBooking}/>
             </Container>
         )
     }
@@ -31,6 +36,7 @@ export default class BookingsPage extends React.PureComponent<BookingsPageProps>
 
 interface BookingsPageProps {
     bookings: Booking[];
+    addBooking: (booking: Booking) => void;
     removeBooking: (booking: Booking) => void;
     currentSorting: SortType;
     setSorting: (newSorting: SortType) => void;

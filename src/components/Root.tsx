@@ -18,6 +18,13 @@ export class Root extends React.PureComponent<{}, RootState> {
         this.setState({bookings: newBookings});
     };
 
+    private readonly addBooking = (bookingToAdd: Booking) => {
+        const {bookings} = this.state;
+        const bookingsLeft: Booking[] =
+            bookings.filter(booking => booking.bookingNumber !== bookingToAdd.bookingNumber);
+        this.setState({bookings: [...bookingsLeft, bookingToAdd]});
+    };
+
     private readonly setSorting = (newSorting: SortType) => {
         this.setState({currentSorting: newSorting});
     };
@@ -32,6 +39,7 @@ export class Root extends React.PureComponent<{}, RootState> {
             <>
                 <Header/>
                 <BookingsPage bookings={bookings}
+                              addBooking={this.addBooking}
                               removeBooking={this.removeBooking}
                               currentSorting={currentSorting}
                               setSorting={this.setSorting}
