@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {Link} from 'react-router-dom';
 import Col from 'reactstrap/lib/Col';
 import Row from 'reactstrap/lib/Row';
 import styled from 'styled-components';
@@ -18,7 +19,8 @@ export default class BookingBox extends React.PureComponent<BookingBoxProps> {
         };
 
         return (
-            <BookingWrapper>
+            <BookingWrapperLink to={`/booking/${bookingNumber}`}
+                                className='d-block border border-secondary rounded my-3 py-2 px-3'>
                 <Row>
                     <Col xs={6} className='d-flex'>
                         <LogoWrapper>
@@ -44,7 +46,7 @@ export default class BookingBox extends React.PureComponent<BookingBoxProps> {
                         </PriceWrapper>
                     </Col>
                 </Row>
-            </BookingWrapper>
+            </BookingWrapperLink>
         )
     }
 }
@@ -59,10 +61,7 @@ interface BookingBoxProps {
     removeBooking: () => void;
 }
 
-const BookingWrapper = styled.a.attrs({
-    className: 'd-block border border-secondary rounded my-3 py-2 px-3',
-    href: '#'
-})`
+const BookingWrapperLink = styled(Link)`
   border-color: rgb(204, 204, 204) !important;
   cursor: pointer;
   color: #212529;

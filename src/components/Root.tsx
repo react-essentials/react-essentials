@@ -1,7 +1,9 @@
 import * as React from 'react';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import {initialBookings} from '../data/initialBookings';
 import {Booking} from '../types/Booking';
 import {SortType} from '../types/SortType';
+import BookingDetailsPage from './BookingDetailsPage';
 import BookingsPage from './BookingsPage';
 import Header from './Header';
 
@@ -36,19 +38,28 @@ export class Root extends React.PureComponent<{}, RootState> {
     render() {
         const {bookings, currentSorting, searchValue} = this.state;
         return (
-            <>
+            <Router>
                 <Header/>
-                <BookingsPage bookings={bookings}
-                              addBooking={this.addBooking}
-                              removeBooking={this.removeBooking}
-                              currentSorting={currentSorting}
-                              setSorting={this.setSorting}
-                              searchValue={searchValue}
-                              setSearchValue={this.setSearchValue}/>
-            </>
+                <Switch>
+                    <Route exact path='/'
+                           render={() => <BookingsPage bookings={bookings}
+                                                       addBooking={this.addBooking}
+                                                       removeBooking={this.removeBooking}
+                                                       currentSorting={currentSorting}
+                                                       setSorting={this.setSorting}
+                                                       searchValue={searchValue}
+                                                       setSearchValue={this.setSearchValue}/>}/>
+                    <Route path="/booking/:bookingNumber"
+                           render={props => <BookingDetailsPage bookings={bookings}
+                                                                {...props}/>}/>
+                    <Route component={NotFoundPage}/>
+                </Switch>
+            </Router>
         );
     }
 }
+
+const NotFoundPage = () => (<h1 className='text-center mt-5'>404 not found</h1>);
 
 interface RootState {
     bookings: Booking[];

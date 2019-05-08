@@ -1,11 +1,12 @@
 import * as React from 'react';
+import {Link} from 'react-router-dom';
 import styled from 'styled-components';
 
 export default class Header extends React.PureComponent {
     render() {
         return (
             <HeaderBar>
-                <HeaderLink>Just Bookings</HeaderLink>
+                <HeaderLink to='/'>Just Bookings</HeaderLink>
             </HeaderBar>
         )
     }
@@ -17,9 +18,7 @@ const HeaderBar = styled.header.attrs({
   background-color: #20232a;
 `;
 
-const HeaderLink = styled.a.attrs({
-    href: '#'
-})`
+const HeaderLink = styled(Link)`
   color: #fff;
   font-size: 1.5rem;
 
